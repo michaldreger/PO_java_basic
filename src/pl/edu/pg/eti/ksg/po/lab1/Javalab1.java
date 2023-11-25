@@ -90,22 +90,42 @@ public class Javalab1 {
         }
 
         try {
-            Punkt p1 = new Punkt(0, 0);
+            Punkt p1 = new Punkt(1, 1);
             System.out.println(p1);
             Transformacja tr1 = new Translacja(1, 3);
-            Transformacja tr2 = new Obrot(90);
-            Transformacja tr3 = new Skalowanie(2, 2);
+            Transformacja tr2 = new Skalowanie(4, 4);
 
-            Transformacja[] transformacje = new Transformacja[] { tr1, tr2, tr3 }; // Correct array initialization
+            Transformacja[] transformacje1 = new Transformacja[] { tr1, tr2 }; // Correct array initialization
 
-            Transformacja tr4 = new ZlozenieTransformacji(transformacje);
+            Transformacja tr11 = new Translacja(0, 2);
+            Transformacja tr22 = new Translacja(1, 1);
+            Transformacja tr33 = new Skalowanie(2, 2);
+            Transformacja tr44 = new Skalowanie(2, 2);
+
+            Transformacja[] transformacje2 = new Transformacja[] { tr11, tr22, tr33, tr44 };
+
+            Transformacja tr4 = new ZlozenieTransformacji(transformacje1);
+            Transformacja tr5 = new ZlozenieTransformacji(transformacje2);
 
             Punkt p2 = tr4.transformuj(p1);
             System.out.println(p2);
-
-            Transformacja trr4 = tr4.getTransformacjaOdwrotna();
-            Punkt p3 = trr4.transformuj(p2);
+            Punkt p3 = tr5.transformuj(p1);
             System.out.println(p3);
+            System.out.println(tr4.equals(tr5));
+
+            Transformacja Blad = new Skalowanie(0, 0);
+            Transformacja[] transformacjeCatch = new Transformacja[] { tr1, tr2, Blad };
+            Transformacja transformacjaCatch = new ZlozenieTransformacji(transformacjeCatch);
+
+            Punkt pBlad = new Punkt(1, 1);
+            Punkt pBladKonec = transformacjaCatch.transformuj(pBlad);
+
+            System.out.println(pBladKonec);
+
+            Transformacja trr = transformacjaCatch.getTransformacjaOdwrotna();
+            Punkt pBladOdwrotny = trr.transformuj(pBladKonec);
+
+            System.out.println(pBladOdwrotny);
 
         } catch (BrakTransformacjiOdwrotnejException ex) {
             ex.printStackTrace();
